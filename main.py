@@ -19,11 +19,16 @@ def find_dockerfile():
     return dockerfile_path if dockerfile_path is not None else "Dockerfile"
 
 
+def report(issues):
+    for thats_not_good in issues:
+        print("ERROR   " + str(thats_not_good))
+
+
 def main():
     print("\nStarting dockerlint...\n")
     the_path = find_dockerfile()
     print("INFO    Using dockerfile from path: " + the_path)
-    dockerfile_linter_pkg.lint(the_path)
+    report(dockerfile_linter_pkg.lint(the_path))
 
 
 if __name__ == "__main__":
