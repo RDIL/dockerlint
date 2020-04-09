@@ -1,0 +1,1 @@
+import pkg_resources.py2_warn

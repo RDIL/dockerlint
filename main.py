@@ -1,34 +1,30 @@
-import sys
 import dockerfile_linter_pkg
-
-
-def find_dockerfile():
-    dockerfile_at_index = None
-    dockerfile_path = None
-
-    for index, obj in enumerate(sys.argv):
-        if "--dockerfile" in obj:
-            dockerfile_at_index = index + 1
-
-        if (
-            dockerfile_at_index is not None
-            and index == dockerfile_at_index
-        ):
-            dockerfile_path = obj
-
-    return dockerfile_path if dockerfile_path is not None else "Dockerfile"
+import click
 
 
 def report(issues):
-    for thats_not_good in issues:
-        print("ERROR   " + str(thats_not_good))
+    """Reports the issue list."""
+
+    for err in issues:
+        final_string = click.style("issue: " + str(err) + " ", fg="red")
+        final_string = final_string + click.style(err.id, fg="red", underline=True)
+        click.echo(final_string)
 
 
-def main():
-    print("\nStarting dockerlint...\n")
-    the_path = find_dockerfile()
-    print("INFO    Using dockerfile from path: " + the_path)
-    report(dockerfile_linter_pkg.lint(the_path))
+@click.command()
+@click.option(
+    "--dockerfile",
+    "-d",
+    required=True,
+    type=click.File("r"),
+    help="The Dockerfile to lint.",
+)
+def main(dockerfile):
+    """Run dockerlint."""
+
+    click.secho("\n    Starting dockerlint...\n", bold=True, fg="cyan")
+    click.secho("info: Using dockerfile from path: " + dockerfile.name, fg="blue")
+    report(dockerfile_linter_pkg.lint(dockerfile))
 
 
 if __name__ == "__main__":
