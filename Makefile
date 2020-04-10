@@ -1,7 +1,8 @@
 build: build-packages
-	pyinstaller -n dockerlint --runtime-hook=mixins/py2-warn-populate.py main.py
-	chmod +x dist/dockerlint/dockerlint
-	tar cJf dockerlint.tar.xz dist/dockerlint
+	pyinstaller -n dockerlint --onefile --runtime-hook=mixins/py2-warn-populate.py main.py
+	cp dist/dockerlint dockerlint
+	chmod +x ./dockerlint
+	tar cJf dockerlint.tar.xz ./dockerlint
 .PHONY: build
 
 build-packages: clean
@@ -10,7 +11,7 @@ build-packages: clean
 .PHONY: build-packages
 
 clean:
-	rm -rf .mypy_cache __pycache__ linter/__pycache__ mixins/__pycache__ linter/dockerfile_linter_pkg/__pycache__ *.spec dist build linter/dist linter/build linter/*.egg-info dockerlint.tar.xz
+	rm -rf .mypy_cache __pycache__ linter/__pycache__ dockerlint mixins/__pycache__ linter/dockerfile_linter_pkg/__pycache__ *.spec dist build linter/dist linter/build linter/*.egg-info dockerlint.tar.xz
 .PHONY: clean
 
 install-deps:

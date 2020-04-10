@@ -131,3 +131,4 @@ dmypy.json
 test.Dockerfile
 
 dockerlint.tar.xz
+dockerlint
