@@ -7,5 +7,7 @@ setuptools.setup(
     description="A Dockerfile linter.",
     url="https://github.com/RDIL/dockerlint",
     author="Reece Dunham",
-    author_email="me@rdil.rocks"
+    author_email="me@rdil.rocks",
+    long_description=open("README.md", "r").read(),
+    long_description_content_type="text/markdown",
 )

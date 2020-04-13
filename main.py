@@ -1,5 +1,6 @@
 import dockerfile_linter_pkg
 import click
+import sys
 
 
 def report(issues):
@@ -7,8 +8,13 @@ def report(issues):
 
     for err in issues:
         final_string = click.style("issue: " + str(err) + " ", fg="red")
-        final_string = final_string + click.style(err.id, fg="red", underline=True)
+        final_string = final_string + click.style(
+            err.id, fg="red", underline=True
+        )
         click.echo(final_string)
+
+    if len(issues) > 0:
+        sys.exit(1)
 
 
 @click.command()
@@ -23,7 +29,9 @@ def main(dockerfile):
     """Run dockerlint."""
 
     click.secho("\n    Starting dockerlint...\n", bold=True, fg="cyan")
-    click.secho("info: Using dockerfile from path: " + dockerfile.name, fg="blue")
+    click.secho(
+        "info: Using dockerfile from path: " + dockerfile.name, fg="blue"
+    )
     report(dockerfile_linter_pkg.lint(dockerfile))
 
 

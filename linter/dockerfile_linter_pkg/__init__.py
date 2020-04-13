@@ -27,12 +27,9 @@ class Issue:
         if self.line_number is None:
             return self.description
 
-        return " ".join([
-            "line",
-            str(self.line_number),
-            "-",
-            self.description
-        ])
+        return " ".join(
+            ["line", str(self.line_number), "-", self.description]
+        )
 
 
 def read_dockerfile(file_io_obj) -> list:
@@ -49,10 +46,7 @@ def lint(dockerfile_path) -> list:
     lines = read_dockerfile(dockerfile_path)
     issues = []
 
-    data = {
-        "base_image_count": 0,
-        "has_reported_base_image_problem": False
-    }
+    data = {"base_image_count": 0, "has_reported_base_image_problem": False}
 
     for index, content in enumerate(lines):
         report_index = index + 1
@@ -63,21 +57,22 @@ def lint(dockerfile_path) -> list:
                 Issue.create_from(
                     "no-install-recommends",
                     "uses apt install without no-install-recommends",
-                    report_index
+                    report_index,
                 )
             )
 
         if parser.is_base_image_definition(c):
             data["base_image_count"] = data["base_image_count"] + 1
 
-            if data["base_image_count"] >= 3 and not data[
-                "has_reported_base_image_problem"
-            ]:
+            if (
+                data["base_image_count"] >= 3
+                and not data["has_reported_base_image_problem"]
+            ):
                 issues.append(
                     Issue.create_from(
                         "too-many-base-images",
                         "has 3 or more FROM declarations",
-                        None
+                        None,
                     )
                 )
                 data["has_reported_base_image_problem"] = True
@@ -85,9 +80,7 @@ def lint(dockerfile_path) -> list:
     if len(lines) >= 750:
         issues.append(
             Issue.create_from(
-                "long-dockerfile",
-                "has 750 or more lines - wowza!",
-                None
+                "long-dockerfile", "has 750 or more lines - wowza!", None
             )
         )
 
