@@ -1,19 +1,12 @@
-build: build-packages
-	pyinstaller -n dockerlint --onefile --runtime-hook=mixins/py2-warn-populate.py main.py
-	cp dist/dockerlint dockerlint
-	chmod +x ./dockerlint
-	tar cJf dockerlint.tar.xz ./dockerlint
+build: clean
+	cd packages && python3 setup.py sdist bdist_wheel
+	python3 -m pip install --upgrade packages/dist/*.whl
 .PHONY: build
 
-build-packages: clean
-	cd linter && python3 setup.py sdist bdist_wheel
-	pip3 install --upgrade linter/dist/*.whl
-.PHONY: build-packages
-
 clean:
-	rm -rf .mypy_cache __pycache__ linter/__pycache__ dockerlint mixins/__pycache__ linter/dockerfile_linter_pkg/__pycache__ *.spec dist build linter/dist linter/build linter/*.egg-info dockerlint.tar.xz
+	rm -rf .mypy_cache __pycache__ packages/__pycache__ packages/dockerfile_linter_pkg/__pycache__ packages/dist packages/build packages/*.egg-info
 .PHONY: clean
 
 install-deps:
-	python3 -m pip install --upgrade pyinstaller click colorama
+	python3 -m pip install --upgrade pip setuptools wheel click colorama
 .PHONY: install-deps

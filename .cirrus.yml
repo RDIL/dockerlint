@@ -5,4 +5,4 @@ task:
   install_dependencies_script: make install-deps
   run_build_script: make
   build_artifacts:
-    path: ./dockerlint.tar.xz
+    path: packages/dist/*
