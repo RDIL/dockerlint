@@ -1,4 +1,5 @@
-from . import rule_validation as checks, parse as parser
+from . import rule_validation as checks
+import dockerfile_parser_pkg as parser
 
 TAB_CHARACTER = "⠀"
 

@@ -4,7 +4,7 @@ build: clean
 .PHONY: build
 
 clean:
-	rm -rf .mypy_cache __pycache__ packages/__pycache__ packages/dockerfile_linter_pkg/__pycache__ packages/dist packages/build packages/*.egg-info
+	rm -rf .mypy_cache __pycache__ packages/__pycache__ packages/dist packages/build packages/*.egg-info
 .PHONY: clean
 
 install-deps:
