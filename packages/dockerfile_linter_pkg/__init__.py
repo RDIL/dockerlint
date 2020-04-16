@@ -47,11 +47,14 @@ def lint(dockerfile_path) -> list:
     lines = read_dockerfile(dockerfile_path)
     issues = []
 
-    data = {"base_image_count": 0, "has_reported_base_image_problem": False}
+    base_image_count = 0
+    label_count = 0
+    has_reported_base_image_problem = False
+    has_reported_label_problem = False
 
     for index, content in enumerate(lines):
         report_index = index + 1
-        c = trim_starting_spaces(content)
+        c = parser.to_node(trim_starting_spaces(content))
 
         if checks.has_no_install_rec(c):
             issues.append(
@@ -62,13 +65,10 @@ def lint(dockerfile_path) -> list:
                 )
             )
 
-        if parser.is_base_image_definition(c):
-            data["base_image_count"] = data["base_image_count"] + 1
+        if c.variant == "FROM":
+            base_image_count = base_image_count + 1
 
-            if (
-                data["base_image_count"] >= 3
-                and not data["has_reported_base_image_problem"]
-            ):
+            if base_image_count >= 3 and not has_reported_base_image_problem:
                 issues.append(
                     Issue.create_from(
                         "too-many-base-images",
@@ -76,7 +76,18 @@ def lint(dockerfile_path) -> list:
                         None,
                     )
                 )
-                data["has_reported_base_image_problem"] = True
+                has_reported_base_image_problem = True
+
+        if c.variant == "LABEL":
+            label_count = label_count + 1
+
+            if label_count >= 20 and not has_reported_label_problem:
+                issues.append(
+                    Issue.create_from(
+                        "too-many-labels", "has 20 or more LABELs", None
+                    )
+                )
+                has_reported_label_problem = True
 
     if len(lines) >= 750:
         issues.append(
