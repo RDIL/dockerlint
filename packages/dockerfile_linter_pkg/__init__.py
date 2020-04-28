@@ -54,7 +54,7 @@ def lint(dockerfile_path) -> list:
 
     for index, content in enumerate(lines):
         report_index = index + 1
-        c = parser.to_node(trim_starting_spaces(content))
+        c = trim_starting_spaces(content)
 
         if checks.has_no_install_rec(c):
             issues.append(
@@ -65,7 +65,7 @@ def lint(dockerfile_path) -> list:
                 )
             )
 
-        if c.variant == "FROM":
+        if parser.is_base_image_definition(c):
             base_image_count = base_image_count + 1
 
             if base_image_count >= 3 and not has_reported_base_image_problem:
@@ -78,7 +78,7 @@ def lint(dockerfile_path) -> list:
                 )
                 has_reported_base_image_problem = True
 
-        if c.variant == "LABEL":
+        if parser.is_label_definition(c):
             label_count = label_count + 1
 
             if label_count >= 20 and not has_reported_label_problem:
