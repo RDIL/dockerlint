@@ -1,6 +1,12 @@
+import os
+import sys
+
+if os.name == "nt":
+    print("Exiting early - dockerlint is not supported on Windows yet!")
+    sys.exit(0)
+
 import dockerfile_linter_pkg
 import click
-import sys
 
 
 def report(issues):
