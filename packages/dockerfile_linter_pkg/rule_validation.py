@@ -1,6 +1,3 @@
-from dockerfile_parser_pkg import Node
-
-
 def has_no_install_rec(line: str) -> bool:
     """
     Checks if the line doesn't have
