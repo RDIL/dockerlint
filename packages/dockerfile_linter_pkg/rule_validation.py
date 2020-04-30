@@ -1,16 +1,14 @@
 from dockerfile_parser_pkg import Node
 
 
-def has_no_install_rec(node: Node) -> bool:
+def has_no_install_rec(line: str) -> bool:
     """
     Checks if the line doesn't have
     --no-install-recommends when it should be present.
     """
-    ct = node.content
 
     return (
-        node.variant == "RUN"
-        and "apt" in ct
-        and "install" in ct
-        and not ("--no-install-recommends" in ct or "-q" in ct)
+        "apt" in line
+        and "install" in line
+        and not ("--no-install-recommends" in line or "-q" in line)
     )
