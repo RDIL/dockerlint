@@ -1,5 +1,6 @@
 from . import rule_validation as checks
 import dockerfile_parser_pkg as parser
+from textwrap import dedent
 
 TAB_CHARACTER = "⠀"
 
@@ -36,7 +37,7 @@ class Issue:
 def read_dockerfile(file_io_obj) -> list:
     """Reads from the IO stream."""
 
-    lines = file_io_obj.readlines()
+    lines = dedent(file_io_obj.read().replace(TAB_CHARACTER, " ")).split("\n")
     file_io_obj.close()
     return lines
 
@@ -54,12 +55,12 @@ def lint(dockerfile_path) -> list:
 
     for index, content in enumerate(lines):
         report_index = index + 1
-        c = trim_starting_spaces(content)
+        c = content
 
         if checks.has_no_install_rec(c):
             issues.append(
                 Issue.create_from(
-                    "no-install-recommends",
+                    "lacks-no-install-recommends",
                     "uses apt install without no-install-recommends",
                     report_index,
                 )
@@ -97,13 +98,3 @@ def lint(dockerfile_path) -> list:
         )
 
     return issues
-
-
-def trim_starting_spaces(line):
-    """
-    Right now this just removes tab characters,
-    but in the future it (should) remove any spaces before
-    actual letters/numbers etc.
-    """
-
-    return line.replace(TAB_CHARACTER, " ")
