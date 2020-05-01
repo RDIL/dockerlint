@@ -10,4 +10,6 @@ setuptools.setup(
     author_email="me@rdil.rocks",
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",
+    include_package_data=True,
+    zip_safe=False,
 )

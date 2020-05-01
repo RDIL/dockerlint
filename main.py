@@ -24,6 +24,7 @@ def report(issues):
 
 
 @click.command()
+@click.version_option(prog_name="dockerlint", version="0.1.0")
 @click.option(
     "--dockerfile",
     "-d",
