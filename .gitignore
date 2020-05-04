@@ -30,3 +30,4 @@ venv.bak/
 .dmypy.json
 dmypy.json
 test.Dockerfile
+dockerlint.test_RESULTS.xml

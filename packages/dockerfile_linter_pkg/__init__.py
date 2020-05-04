@@ -8,14 +8,14 @@ TAB_CHARACTER = "⠀"
 class Issue:
     """An issue with the Dockerfile."""
 
-    id: str = "custom-rule"
-    description: str = "A description of the rule"
+    id = "custom-rule"
+    description = "A description of the rule"
 
     def __init__(self, line_number):
         self.line_number = line_number
 
     @staticmethod
-    def create_from(id: str, description: str, line_number=None):
+    def create_from(id, description, line_number=None):
         """Create an issue instance."""
 
         g = Issue(line_number)
@@ -23,7 +23,7 @@ class Issue:
         g.description = description
         return g
 
-    def __str__(self) -> str:
+    def __str__(self):
         """Convert this issue to a human-readable string."""
 
         if self.line_number is None:
@@ -34,7 +34,7 @@ class Issue:
         )
 
 
-def read_dockerfile(file_io_obj) -> list:
+def read_dockerfile(file_io_obj):
     """Reads from the IO stream."""
 
     lines = dedent(file_io_obj.read().replace(TAB_CHARACTER, " ")).split("\n")
@@ -42,7 +42,7 @@ def read_dockerfile(file_io_obj) -> list:
     return lines
 
 
-def lint(dockerfile_path) -> list:
+def lint(dockerfile_path):
     """Lints the passed Dockerfile."""
 
     lines = read_dockerfile(dockerfile_path)

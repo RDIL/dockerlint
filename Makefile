@@ -8,5 +8,5 @@ clean:
 .PHONY: clean
 
 install-deps:
-	python3 -m pip install --upgrade pip setuptools wheel click colorama
+	python3 -m pip install --upgrade pip setuptools wheel click colorama junit-xml
 .PHONY: install-deps

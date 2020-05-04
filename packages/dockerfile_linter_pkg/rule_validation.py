@@ -1,4 +1,4 @@
-def has_no_install_rec(line: str) -> bool:
+def has_no_install_rec(line):
     """
     Checks if the line doesn't have
     --no-install-recommends when it should be present.
