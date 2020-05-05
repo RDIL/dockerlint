@@ -30,7 +30,7 @@ def report_all(issues, junit, dockerfile_path):
 
 
 @click.command()
-@click.version_option(prog_name="dockerlint", version="0.1.0")
+@click.version_option(prog_name="dockerlint", version="0.2.0")
 @click.option(
     "--dockerfile",
     "-d",
@@ -49,9 +49,7 @@ def main(dockerfile, report):
     """Run dockerlint."""
 
     click.secho("\n    Starting dockerlint...\n", bold=True, fg="cyan")
-    click.secho(
-        "info: Using dockerfile from path: " + dockerfile.name, fg="blue"
-    )
+    click.echo("Using dockerfile from path: " + dockerfile.name)
     report_all(
         dockerfile_linter_pkg.lint(dockerfile), report, dockerfile.name
     )
