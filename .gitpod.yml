@@ -1,0 +1,5 @@
+image: rdilpickle/better-wsfull:latest
+
+tasks:
+  - init: make install-deps
+    command: make
