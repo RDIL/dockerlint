@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.2.1
+
+Bug-fix release.
+
+```diff
+* Import dependencies after performing Windows check
+```
+
 ## v0.2.0
 
 Feature release.

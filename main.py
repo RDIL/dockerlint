@@ -1,11 +1,13 @@
 import os
 import sys
-import dockerfile_linter_pkg
-import click
 
 if os.name == "nt":
     print("Exiting early - dockerlint is not supported on Windows yet!")
     sys.exit(0)
+
+# import these after performing the windows check
+import dockerfile_linter_pkg # noqa
+import click # noqa
 
 
 def report_all(issues, junit, dockerfile_path):
@@ -30,7 +32,7 @@ def report_all(issues, junit, dockerfile_path):
 
 
 @click.command()
-@click.version_option(prog_name="dockerlint", version="0.2.0")
+@click.version_option(prog_name="dockerlint", version="0.2.1")
 @click.option(
     "--dockerfile",
     "-d",
