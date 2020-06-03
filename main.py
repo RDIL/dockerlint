@@ -6,8 +6,8 @@ if os.name == "nt":
     sys.exit(0)
 
 # import these after performing the windows check
-import dockerfile_linter_pkg # noqa
-import click # noqa
+import dockerfile_linter_pkg  # noqa
+import click  # noqa
 
 
 def report_all(issues, junit, dockerfile_path):

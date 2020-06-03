@@ -77,8 +77,7 @@ def lint(dockerfile_path):
             if base_image_count >= 3 and not has_reported_base_image_problem:
                 issues.append(
                     Issue.create_from(
-                        "has 3 or more FROM declarations",
-                        None,
+                        "has 3 or more FROM declarations", None,
                     )
                 )
                 has_reported_base_image_problem = True
@@ -88,17 +87,13 @@ def lint(dockerfile_path):
 
             if label_count >= 20 and not has_reported_label_problem:
                 issues.append(
-                    Issue.create_from(
-                        "has 20 or more LABELs", None
-                    )
+                    Issue.create_from("has 20 or more LABELs", None)
                 )
                 has_reported_label_problem = True
 
     if len(lines) >= 750:
         issues.append(
-            Issue.create_from(
-                "has 750 or more lines - wowza!", None
-            )
+            Issue.create_from("has 750 or more lines - wowza!", None)
         )
 
     return issues
