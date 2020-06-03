@@ -54,6 +54,7 @@ def lint(dockerfile_path):
     label_count = 0
     has_reported_base_image_problem = False
     has_reported_label_problem = False
+    parrotsec = "parrotsec" in lines.join("\n").lower()
 
     for index, content in enumerate(lines):
         report_index = index + 1
@@ -90,6 +91,23 @@ def lint(dockerfile_path):
                     Issue.create_from("has 20 or more LABELs", None)
                 )
                 has_reported_label_problem = True
+
+        if parrotsec:
+            if checks.using_apt_get_on_parrotsec(c):
+                issues.append(
+                    Issue.create_from(
+                        "uses apt-get instead of apt on parrotsec",
+                        report_index,
+                    )
+                )
+
+            if checks.using_dist_upgrade_on_parrotsec(c):
+                issues.append(
+                    Issue.create_from(
+                        "uses apt dist-upgrade instead of parrot-upgrade",
+                        report_index,
+                    )
+                )
 
     if len(lines) >= 750:
         issues.append(
