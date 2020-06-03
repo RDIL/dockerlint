@@ -14,11 +14,7 @@ def report_all(issues, junit, dockerfile_path):
     """Reports the issue list."""
 
     for err in issues:
-        final_string = click.style("issue: " + str(err) + " ", fg="red")
-        final_string = final_string + click.style(
-            err.id, fg="red", underline=True
-        )
-        click.echo(final_string)
+        click.secho("issue: " + str(err) + " ", fg="red")
 
     if junit:
         from dockerlint_xml_reporting import create_xml_report

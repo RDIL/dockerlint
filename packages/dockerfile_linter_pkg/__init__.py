@@ -8,18 +8,16 @@ TAB_CHARACTER = "⠀"
 class Issue:
     """An issue with the Dockerfile."""
 
-    id = "custom-rule"
     description = "A description of the rule"
 
     def __init__(self, line_number):
         self.line_number = line_number
 
     @staticmethod
-    def create_from(id, description, line_number=None):
+    def create_from(description, line_number=None):
         """Create an issue instance."""
 
         g = Issue(line_number)
-        g.id = id
         g.description = description
         return g
 
@@ -48,7 +46,11 @@ def lint(dockerfile_path):
     lines = read_dockerfile(dockerfile_path)
     issues = []
 
+    # has continuation marker (backslash)
+    cont_marker = False
+    # number of FROM nodes
     base_image_count = 0
+    # number of LABELs in general
     label_count = 0
     has_reported_base_image_problem = False
     has_reported_label_problem = False
@@ -56,11 +58,14 @@ def lint(dockerfile_path):
     for index, content in enumerate(lines):
         report_index = index + 1
         c = content
+        cont_marker = c.endswith("\\") or c.endswith("\\ ")
+
+        if c == "" or c.startswith("#"):
+            cont_marker = False
 
         if checks.has_no_install_rec(c):
             issues.append(
                 Issue.create_from(
-                    "lacks-no-install-recommends",
                     "uses apt install without no-install-recommends",
                     report_index,
                 )
@@ -72,20 +77,19 @@ def lint(dockerfile_path):
             if base_image_count >= 3 and not has_reported_base_image_problem:
                 issues.append(
                     Issue.create_from(
-                        "too-many-base-images",
                         "has 3 or more FROM declarations",
                         None,
                     )
                 )
                 has_reported_base_image_problem = True
 
-        if parser.is_label_definition(c):
+        if parser.is_label_definition(c, cont_marker):
             label_count = label_count + 1
 
             if label_count >= 20 and not has_reported_label_problem:
                 issues.append(
                     Issue.create_from(
-                        "too-many-labels", "has 20 or more LABELs", None
+                        "has 20 or more LABELs", None
                     )
                 )
                 has_reported_label_problem = True
@@ -93,7 +97,7 @@ def lint(dockerfile_path):
     if len(lines) >= 750:
         issues.append(
             Issue.create_from(
-                "long-dockerfile", "has 750 or more lines - wowza!", None
+                "has 750 or more lines - wowza!", None
             )
         )
 
