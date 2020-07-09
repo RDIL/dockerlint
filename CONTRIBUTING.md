@@ -8,9 +8,9 @@ Welcome to the contributing/development guide!
 
 To install the needed dependencies, run `make install-deps`.
 
-### Build Packages
+## Build
 
-To build your changes, just run `make` - you don't need to run this if you change `main.py`, but you will every time you change a file in `packages` and want to test.
+To build the package, run `make`.
 
 ### Run Cleanup
 

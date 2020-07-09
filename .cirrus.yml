@@ -1,8 +1,7 @@
 task:
-  name: Linux Build
+  name: Build
   container:
     image: python:latest
-  install_dependencies_script: make install-deps
-  run_build_script: make
+  run_build_script: make build
   build_artifacts:
-    path: packages/dist/*
+    path: dist/*

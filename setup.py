@@ -1,10 +1,10 @@
 import setuptools
 
 setuptools.setup(
-    name="dockerlint_tools",
+    name="dockerlint",
     version="0.2.1",
     packages=setuptools.find_packages(),
-    description="The packages that power dockerlint.",
+    description="A linter for Docker images.",
     url="https://github.com/RDIL/dockerlint",
     author="Reece Dunham",
     author_email="me@rdil.rocks",
@@ -12,4 +12,13 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     zip_safe=False,
+    install_requires=[
+        "click",
+        "colorama",
+        "junit-xml",
+    ],
+    entry_points="""
+        [console_scripts]
+        dockerlint=dockerlint:main
+    """,
 )
