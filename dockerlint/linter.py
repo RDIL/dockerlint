@@ -53,7 +53,7 @@ def lint(dockerfile_path):
     label_count = 0
     has_reported_base_image_problem = False
     has_reported_label_problem = False
-    parrotsec = "parrotsec" in lines.join("\n").lower()
+    parrotsec = "parrotsec" in "\n".join(lines).lower()
 
     for index, content in enumerate(lines):
         report_index = index + 1

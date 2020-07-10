@@ -28,7 +28,7 @@ def report_all(issues, junit, dockerfile_path):
 
 
 @click.command()
-@click.version_option(prog_name="dockerlint", version="0.3.0")
+@click.version_option(prog_name="dockerlint", version="0.3.1")
 @click.option(
     "--dockerfile",
     "-d",

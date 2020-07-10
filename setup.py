@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="dockerlint",
-    version="0.3.0",
+    version="0.3.1",
     packages=setuptools.find_packages(),
     description="A linter for Docker images.",
     url="https://github.com/RDIL/dockerlint",
