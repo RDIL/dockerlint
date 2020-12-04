@@ -1,6 +1,8 @@
 # dockerlint
 
-Lint a Dockerfile for potential issues related to image size and functionality.
+> **Dockerlint is deprecated. I don't have time to maintain it anymore, please find an alternative.**
+
+Lint a `Dockerfile` for potential issues related to image size and functionality.
 
 ## How to Use
 
